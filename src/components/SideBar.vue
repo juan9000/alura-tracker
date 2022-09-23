@@ -1,7 +1,7 @@
 <template>
   <header>
     <h1>
-      <img src="../assets/logo.png" alt="Alura Track">
+      <img src="../assets/logo.png" alt="Alura Track" />
     </h1>
     <button class="button" @click="changeTheme()">
       {{ buttonText }}
@@ -11,17 +11,13 @@
       <ul>
         <li>
           <router-link to="/" class="link">
-            <i class="fas fa-tasks">
-              Tasks
-            </i>
+            <i class="fas fa-tasks"> Tasks </i>
           </router-link>
         </li>
-        
+
         <li>
           <router-link to="/projects" class="link">
-            <i class="fas fa-project-diagram">
-                Projects
-            </i>
+            <i class="fas fa-project-diagram"> Projects </i>
           </router-link>
         </li>
       </ul>
@@ -30,36 +26,35 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'SideBar',
-  emits: ['onChangeTheme'],
+  name: "SideBar",
+  emits: ["onChangeTheme"],
 
-  data () {
+  data() {
     return {
-      darkModeActive: false
-    }
+      darkModeActive: false,
+    };
   },
 
   computed: {
-    buttonText () {
+    buttonText() {
       if (this.darkModeActive) {
-        return 'White Mode'
+        return "White Mode";
       }
-      return 'Dark Mode'
-    }
+      return "Dark Mode";
+    },
   },
 
   methods: {
-    changeTheme () {
-      console.log('test')
-      this.darkModeActive = !this.darkModeActive
-      this.$emit('onChangeTheme',  this.darkModeActive)
-    }
-  }
-})
-
+    changeTheme() {
+      console.log("test");
+      this.darkModeActive = !this.darkModeActive;
+      this.$emit("onChangeTheme", this.darkModeActive);
+    },
+  },
+});
 </script>
 
 <style scoped>
@@ -70,6 +65,7 @@ header {
   padding: 1rem;
   text-align: center;
 }
+
 @media only screen and (max-width: 768px) {
   header {
     padding: 2.5rem;
@@ -80,13 +76,16 @@ header {
 .panel li {
   margin: 8px 0;
 }
+
 .link {
   color: #fff;
 }
+
 .link:hover {
-  color: #FAF0CA;
+  color: #faf0ca;
 }
+
 .link.router-link-active {
-  color: #FAF0CA;
+  color: #faf0ca;
 }
 </style>

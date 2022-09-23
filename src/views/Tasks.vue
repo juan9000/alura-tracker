@@ -1,16 +1,18 @@
 <template>
-  <TaskForm @saveTask="saveTask" />
-  <div class="list">
-    <TaskBox v-if="noTask">
-      Any task to display ;-;
-    </TaskBox>
-    
-    <TaskCard
-      v-for="(task, index) in tasks"
-      :key="index"
-      :task="task"
-    />
-  </div>
+  <section>
+    <TaskForm @saveTask="saveTask" />
+    <div class="list">
+      <TaskBox v-if="noTask">
+        Any task to display ;-;
+      </TaskBox>
+      
+      <TaskCard
+        v-for="(task, index) in tasks"
+        :key="index"
+        :task="task"
+      />
+    </div>
+  </section>
 </template>
 
 <script lang="ts">

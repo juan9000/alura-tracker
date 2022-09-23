@@ -1,7 +1,7 @@
 <template>
   <main
     class="columns is-gapless is-multiline"
-    :class="{'dark-mode': darkModeActive}"
+    :class="{ 'dark-mode': darkModeActive }"
   >
     <div class="column is-one-quarter">
       <SideBar @onChangeTheme="changeTheme" />
@@ -14,30 +14,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent} from 'vue'
+import { defineComponent } from "vue";
 
-import SideBar from './components/SideBar.vue'
+import SideBar from "./components/SideBar.vue";
 
 export default defineComponent({
-  name: 'App',
+  name: "App",
 
   components: {
     SideBar,
   },
 
-  data () {
+  data() {
     return {
-      darkModeActive: false
-    }
+      darkModeActive: false,
+    };
   },
 
   methods: {
-    changeTheme (darkModeActive: boolean) {
-      this.darkModeActive = darkModeActive
-    }
+    changeTheme(darkModeActive: boolean) {
+      this.darkModeActive = darkModeActive;
+    },
   },
-})
-</script> 
+});
+</script>
 
 <style>
 .list {
@@ -51,10 +51,10 @@ main {
 
 main.dark-mode {
   --bg-primary: #2b2d42;
-  --text-primary: #ddd
+  --text-primary: #ddd;
 }
 
 .content {
-  background-color: var(--bg-primary)
+  background-color: var(--bg-primary);
 }
 </style>

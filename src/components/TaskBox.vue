@@ -5,15 +5,15 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
-  export default defineComponent({
-    name: 'TaskBox'
-  })
+export default defineComponent({
+  name: "TaskBox",
+});
 </script>
 
 <style scoped>
-  .box {
-    background: #FAF0CA
-  }
+.box {
+  background: #faf0ca;
+}
 </style>

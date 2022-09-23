@@ -1,6 +1,6 @@
 <template>
   <div class="is-flex is-align-items-center is-justify-content-space-between">
-    <TimerFormater  :time-seconds="timeSeconds"/>
+    <TimerFormater :time-seconds="timeSeconds" />
 
     <button class="button" @click="start" :disabled="counting">
       <span class="icon">
@@ -18,42 +18,42 @@
   </div>
 </template>
 
-<script lang="ts"> 
-import { defineComponent } from 'vue'
+<script lang="ts">
+import { defineComponent } from "vue";
 
-import TimerFormater from './TimerFormater.vue'
+import TimerFormater from "./TimerFormater.vue";
 
 export default defineComponent({
-  name: 'TimerController',
+  name: "TimerController",
 
-  emits: ['timerStoped'],
+  emits: ["timerStoped"],
 
   components: {
-    TimerFormater
+    TimerFormater,
   },
 
-  data () {
+  data() {
     return {
       timeSeconds: 0,
       timer: 0,
-      counting: false
-    }
+      counting: false,
+    };
   },
 
   methods: {
-    start () {
-      this.counting = true
+    start() {
+      this.counting = true;
       this.timer = setInterval(() => {
-        this.timeSeconds++
-      }, 1000)
+        this.timeSeconds++;
+      }, 1000);
     },
 
-    stop () {
-      this.counting = false
-      clearInterval(this.timer)
-      this.$emit('timerStoped', this.timeSeconds)
-      this.timeSeconds = 0
-    }
-  }
-})
-</script> 
+    stop() {
+      this.counting = false;
+      clearInterval(this.timer);
+      this.$emit("timerStoped", this.timeSeconds);
+      this.timeSeconds = 0;
+    },
+  },
+});
+</script>
