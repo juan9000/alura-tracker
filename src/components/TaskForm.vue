@@ -2,7 +2,7 @@
   <div class="box form">
     <div class="columns">
       <div
-        class="column is-8"
+        class="column is-5"
         role="forn"
         aria-label="Form to create a new task"
       >
@@ -14,6 +14,21 @@
         />
       </div>
 
+      <div class="column is-3">
+        <div class="select">
+          <select v-model="idProject">
+            <option value="">Select a project</option>
+            <option
+              :value="project.id"
+              v-for="project in projects"
+              :key="project.id"
+            >
+              {{ project.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
       <div class="column">
         <TimerController @timerStoped="finishTask" />
       </div>
@@ -22,9 +37,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 
 import TimerController from "./TimerController.vue";
+import { useStore } from "vuex"
+import { key } from "@/store"
 
 export default defineComponent({
   name: "TaskForm",
@@ -38,6 +55,7 @@ export default defineComponent({
   data() {
     return {
       description: "",
+      idProject: ""
     };
   },
 
@@ -46,11 +64,18 @@ export default defineComponent({
       this.$emit("saveTask", {
         duration: time,
         description: this.description,
+        project: this.projects.find(project => project.id === this.idProject )
       });
 
       this.description = "";
     },
   },
+  setup () {
+    const store = useStore(key)
+    return {
+      projects: computed(() => store.state.projects)
+    }
+  }
 });
 </script>
 

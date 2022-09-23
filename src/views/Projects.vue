@@ -1,16 +1,5 @@
 <template>
   <section class="projects">
-    <h1 class="title">Projects</h1>
-    <form @submit.prevent="save">
-      <div class="field">
-        <label for="projectName" class="label"> Project Name </label>
-        <input type="text" class="input" v-model="projectName" />
-        <div class="field mt-2">
-          <button class="button" type="submit">Save</button>
-        </div>
-      </div>
-    </form>
-
     <table class="table is-fullwidth">
       <thead>
         <tr>
@@ -33,26 +22,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import IProject from "../interfaces/IProject";
+import { defineComponent, computed } from "vue";
+import { useStore } from "@/store";
 
 export default defineComponent({
-  name: "Projects",
-  data() {
+  name: "Projects", 
+  setup() {
+    const store = useStore();
+
     return {
-      projectName: "",
-      projects: [] as IProject[],
+      projects: computed(() => store.state.projects)
     };
-  },
-  methods: {
-    save() {
-      const project: IProject = {
-        name: this.projectName,
-        id: new Date().toISOString(),
-      };
-      this.projects.push(project);
-      this.projectName = "";
-    },
   },
 });
 </script>
