@@ -1,5 +1,12 @@
 <template>
   <section class="projects">
+    <h1 class="title">Projects</h1>
+    <router-link to="/projetos/novo" class="button">
+      <span class="icon is-small">
+        <i class="fas fa-plus"></i>
+      </span>
+      <span>Novo projeto</span>
+    </router-link>
     <table class="table is-fullwidth">
       <thead>
         <tr>
@@ -26,12 +33,12 @@ import { defineComponent, computed } from "vue";
 import { useStore } from "@/store";
 
 export default defineComponent({
-  name: "Projects", 
+  name: "Projects",
   setup() {
     const store = useStore();
 
     return {
-      projects: computed(() => store.state.projects)
+      projects: computed(() => store.state.projects),
     };
   },
 });

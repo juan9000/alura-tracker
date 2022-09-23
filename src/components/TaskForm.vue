@@ -40,8 +40,8 @@
 import { computed, defineComponent } from "vue";
 
 import TimerController from "./TimerController.vue";
-import { useStore } from "vuex"
-import { key } from "@/store"
+import { useStore } from "vuex";
+import { key } from "@/store";
 
 export default defineComponent({
   name: "TaskForm",
@@ -55,7 +55,7 @@ export default defineComponent({
   data() {
     return {
       description: "",
-      idProject: ""
+      idProject: "",
     };
   },
 
@@ -64,18 +64,18 @@ export default defineComponent({
       this.$emit("saveTask", {
         duration: time,
         description: this.description,
-        project: this.projects.find(project => project.id === this.idProject )
+        project: this.projects.find((project) => project.id === this.idProject),
       });
 
       this.description = "";
     },
   },
-  setup () {
-    const store = useStore(key)
+  setup() {
+    const store = useStore(key);
     return {
-      projects: computed(() => store.state.projects)
-    }
-  }
+      projects: computed(() => store.state.projects),
+    };
+  },
 });
 </script>
 

@@ -26,9 +26,9 @@ export default defineComponent({
   },
   methods: {
     save() {
-      this.store.commit('ADD_PROJECT', this.projectName)
+      this.store.commit("ADD_PROJECT", this.projectName);
       this.projectName = "";
-      this.$router.push('/projects')
+      this.$router.push("/projects");
     },
   },
 
@@ -36,7 +36,7 @@ export default defineComponent({
     const store = useStore();
 
     return {
-      store
+      store,
     };
   },
 });
