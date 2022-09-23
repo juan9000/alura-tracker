@@ -1,6 +1,5 @@
 <template>
-  <section class="projects">
-    <h1 class="title">Projects</h1>
+  <section>
     <form @submit.prevent="save">
       <div class="field">
         <label for="projectName" class="label"> Project Name </label>
@@ -19,6 +18,17 @@ import { useStore } from "@/store";
 
 export default defineComponent({
   name: "Form",
+  props: {
+    id: {
+      type: String,
+    }
+  },
+  mounted () {
+    if (this.id) {
+      const project = this.store.state.projects.find(project => project.id == this.id)
+      this.projectName = project?.name || ''
+    }
+  },
   data() {
     return {
       projectName: "",
@@ -26,7 +36,14 @@ export default defineComponent({
   },
   methods: {
     save() {
-      this.store.commit("ADD_PROJECT", this.projectName);
+      if (this.id) {
+        this.store.commit('EDIT_PROJECT', {
+          id: this.id,
+          name: this.projectName
+        })
+      } else {
+        this.store.commit("ADD_PROJECT", this.projectName);
+      }
       this.projectName = "";
       this.$router.push("/projects");
     },
@@ -41,9 +58,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-.projects {
-  padding: 1.25rem;
-}
-</style>
