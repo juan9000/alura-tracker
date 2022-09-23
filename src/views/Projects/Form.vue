@@ -16,7 +16,8 @@
 import { defineComponent } from "vue";
 import { useStore } from "@/store";
 import { ADD_PROJECT, EDIT_PROJECT } from "@/store/type-mutations";
-
+import { TypeNotification } from "@/interfaces/INotification";
+import { notificationMixin } from "@/mixins/notify";
 export default defineComponent({
   name: "Form",
   props: {
@@ -24,6 +25,7 @@ export default defineComponent({
       type: String,
     },
   },
+  mixins: [notificationMixin],
   mounted() {
     if (this.id) {
       const project = this.store.state.projects.find(
@@ -48,6 +50,11 @@ export default defineComponent({
         this.store.commit(ADD_PROJECT, this.projectName);
       }
       this.projectName = "";
+      this.notify(
+        TypeNotification.SUCESS,
+        "Exelent!",
+        "Project available for use"
+      );
       this.$router.push("/projects");
     },
   },
