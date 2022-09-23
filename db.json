@@ -1,0 +1,50 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "name": "Testing 2"
+    },
+    {
+      "name": "ttt",
+      "id": 2
+    },
+    {
+      "name": "zxcs",
+      "id": 4
+    }
+  ],
+  "tasks": [
+    {
+      "id": 1,
+      "duration": 120,
+      "description": "Config vue",
+      "project": {
+        "id": 1,
+        "name": "Testing 1"
+      }
+    },
+    {
+      "duration": 1,
+      "description": "task",
+      "id": 2
+    },
+    {
+      "duration": 1,
+      "description": "",
+      "project": {
+        "id": 1,
+        "name": "Testing 1"
+      },
+      "id": 3
+    },
+    {
+      "duration": 0,
+      "description": "",
+      "project": {
+        "id": 1,
+        "name": "Testing 2"
+      },
+      "id": 4
+    }
+  ]
+}

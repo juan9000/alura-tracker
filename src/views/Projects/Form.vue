@@ -15,7 +15,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useStore } from "@/store";
-import { ADD_PROJECT, EDIT_PROJECT } from "@/store/type-mutations";
+import { POST_PROJECT, PUT_PROJECT } from "@/store/type-actions";
 import { TypeNotification } from "@/interfaces/INotification";
 import useNotifier from "@/hooks/notifier";
 
@@ -42,13 +42,21 @@ export default defineComponent({
   methods: {
     save() {
       if (this.id) {
-        this.store.commit(EDIT_PROJECT, {
-          id: this.id,
-          name: this.projectName,
-        });
+        this.store
+          .dispatch(PUT_PROJECT, {
+            id: this.id,
+            name: this.projectName,
+          })
+          .then(() => {
+            this.sucessNotification();
+          });
       } else {
-        this.store.commit(ADD_PROJECT, this.projectName);
+        this.store.dispatch(POST_PROJECT, this.projectName).then(() => {
+          this.sucessNotification();
+        });
       }
+    },
+    sucessNotification() {
       this.projectName = "";
       this.notify(
         TypeNotification.SUCESS,
@@ -58,7 +66,6 @@ export default defineComponent({
       this.$router.push("/projects");
     },
   },
-
   setup() {
     const store = useStore();
     const { notify } = useNotifier();

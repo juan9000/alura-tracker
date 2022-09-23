@@ -1,6 +1,6 @@
 <template>
   <TaskBox>
-    <div class="columns">
+    <div class="columns cursor-pointer" @click="taskClick()">
       <div class="column is-7">
         {{ task.description || "Task without description." }}
       </div>
@@ -24,7 +24,7 @@ import ITask from "../interfaces/ITask";
 
 export default defineComponent({
   name: "TaskCard",
-
+  emits: ['taskClicked'],
   props: {
     task: {
       type: Object as PropType<ITask>,
@@ -36,5 +36,17 @@ export default defineComponent({
     TimerFormater,
     TaskBox,
   },
+
+  methods: {
+    taskClick() {
+      this.$emit('taskClicked', this.task)
+    }
+  }
 });
 </script>
+
+<style scoped>
+.cursor-pointer {
+  cursor: pointer;
+}
+</style>>
