@@ -4,6 +4,9 @@
       <div class="column is-7">
         {{ task.description || "Task without description." }}
       </div>
+      <div class="column is-4">
+        {{ task.project?.name || 'No project' }}
+      </div>
       <div class="column">
         <TimerFormater :time-seconds="task.duration" />
       </div>
