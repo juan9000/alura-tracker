@@ -8,6 +8,7 @@
     </div>
 
     <div class="column is-three-quarter content">
+      <Notifications />
       <router-view />
     </div>
   </main>
@@ -17,12 +18,14 @@
 import { defineComponent } from "vue";
 
 import SideBar from "./components/SideBar.vue";
+import Notifications from "./components/Notifications.vue";
 
 export default defineComponent({
   name: "App",
 
   components: {
     SideBar,
+    Notifications,
   },
 
   data() {

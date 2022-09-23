@@ -11,14 +11,13 @@ const routes: RouteRecordRaw[] = [
     component: Tasks,
   },
   {
-    path: '/projects',
+    path: "/projects",
     component: Projects,
     children: [
       {
         path: "",
         name: "Projects",
         component: List,
-        
       },
       {
         path: "new",
@@ -31,8 +30,8 @@ const routes: RouteRecordRaw[] = [
         component: Form,
         props: true,
       },
-    ]
-  }
+    ],
+  },
 ];
 
 const router = createRouter({

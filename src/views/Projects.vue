@@ -2,15 +2,15 @@
   <div class="projects">
     <h1 class="title">Projects</h1>
     <router-view />
-  </div> 
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'Projects'
-})
+  name: "Projects",
+});
 </script>
 
 <style scoped>

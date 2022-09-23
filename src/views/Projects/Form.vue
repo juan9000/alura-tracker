@@ -15,18 +15,21 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useStore } from "@/store";
+import { ADD_PROJECT, EDIT_PROJECT } from "@/store/type-mutations";
 
 export default defineComponent({
   name: "Form",
   props: {
     id: {
       type: String,
-    }
+    },
   },
-  mounted () {
+  mounted() {
     if (this.id) {
-      const project = this.store.state.projects.find(project => project.id == this.id)
-      this.projectName = project?.name || ''
+      const project = this.store.state.projects.find(
+        (project) => project.id == this.id
+      );
+      this.projectName = project?.name || "";
     }
   },
   data() {
@@ -37,12 +40,12 @@ export default defineComponent({
   methods: {
     save() {
       if (this.id) {
-        this.store.commit('EDIT_PROJECT', {
+        this.store.commit(EDIT_PROJECT, {
           id: this.id,
-          name: this.projectName
-        })
+          name: this.projectName,
+        });
       } else {
-        this.store.commit("ADD_PROJECT", this.projectName);
+        this.store.commit(ADD_PROJECT, this.projectName);
       }
       this.projectName = "";
       this.$router.push("/projects");
