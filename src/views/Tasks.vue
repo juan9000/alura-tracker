@@ -23,7 +23,7 @@ import TaskBox from '../components/TaskBox.vue'
 import ITask from '../interfaces/ITask'
 
 export default defineComponent({
-  name: 'App',
+  name: 'Tasks',
 
   components: {
     TaskForm,
