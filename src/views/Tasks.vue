@@ -25,43 +25,35 @@
         @taskClicked="selectTask"
       />
 
-      <div
-        v-if="selectedTask"
-        class="modal"
-        :class="{ 'is-active': selectedTask }"
-      >
-        <div class="modal-background" />
-        <div class="modal-card">
-          <header class="modal-card-head">
-            <p class="modal-card-title">Edit Task</p>
-            <button
-              class="delete"
-              aria-label="close"
-              @click="closeModal"
-            ></button>
-          </header>
+      <Modal :show="selectedTask != null">
+        <template v-slot:header>
+          <p class="modal-card-title">Edit Task</p>
+          <button
+            class="delete"
+            aria-label="close"
+            @click="closeModal"
+          ></button>
+        </template>
 
-          <section class="modal-card-body">
-            <div class="field">
-              <label for="taskDescription" class="label">
-                Task Description
-              </label>
-              <input
-                type="text"
-                class="input"
-                v-model="selectedTask.description"
-              />
-            </div>
-          </section>
+        <template v-slot:section>
+          <div class="field">
+            <label for="taskDescription" class="label">
+              Task Description
+            </label>
+            <input
+              v-if="selectedTask"
+              type="text"
+              class="input"
+              v-model="selectedTask.description"
+            />
+          </div>
+        </template>
 
-          <footer class="modal-card-foot">
-            <button class="button is-success" @click="editTask">
-              Save Task
-            </button>
-            <button class="button" @click="closeModal">Cancel</button>
-          </footer>
-        </div>
-      </div>
+        <template v-slot:footer>
+          <button class="button is-success" @click="editTask">Save Task</button>
+          <button class="button" @click="closeModal">Cancel</button>
+        </template>
+      </Modal>
     </div>
   </section>
 </template>
@@ -72,6 +64,7 @@ import { computed, defineComponent, ref, watchEffect } from "vue";
 import TaskForm from "../components/TaskForm.vue";
 import TaskCard from "../components/TaskCard.vue";
 import TaskBox from "../components/TaskBox.vue";
+import Modal from "../components/Modal.vue";
 import { useStore } from "@/store";
 import {
   GET_PROJECTS,
@@ -88,6 +81,7 @@ export default defineComponent({
     TaskForm,
     TaskCard,
     TaskBox,
+    Modal
   },
 
   data() {
@@ -125,16 +119,11 @@ export default defineComponent({
     store.dispatch(GET_PROJECTS);
 
     const filter = ref("");
-    // const tasks = computed(() =>
-    //   store.state.tasks.filter(
-    //     (task) => !filter.value || task.description.toLocaleLowerCase().includes(filter.value.toLocaleLowerCase())
-    //   )
-    // );
 
     watchEffect(() => {
-      store.dispatch(GET_TASKS, filter.value)
-      console.log(filter.value)
-    })
+      store.dispatch(GET_TASKS, filter.value);
+      console.log(filter.value);
+    });
 
     return {
       tasks: computed(() => store.state.tasks),
