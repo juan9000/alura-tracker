@@ -13,11 +13,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { useStore } from "@/store";
 import { POST_PROJECT, PUT_PROJECT } from "@/store/type-actions";
 import { TypeNotification } from "@/interfaces/INotification";
 import useNotifier from "@/hooks/notifier";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "Form",
@@ -26,52 +27,46 @@ export default defineComponent({
       type: String,
     },
   },
-  mounted() {
-    if (this.id) {
-      const project = this.store.state.projects.find(
-        (project) => project.id == this.id
-      );
-      this.projectName = project?.name || "";
-    }
-  },
-  data() {
-    return {
-      projectName: "",
-    };
-  },
-  methods: {
-    save() {
-      if (this.id) {
-        this.store
-          .dispatch(PUT_PROJECT, {
-            id: this.id,
-            name: this.projectName,
-          })
-          .then(() => {
-            this.sucessNotification();
-          });
-      } else {
-        this.store.dispatch(POST_PROJECT, this.projectName).then(() => {
-          this.sucessNotification();
-        });
-      }
-    },
-    sucessNotification() {
-      this.projectName = "";
-      this.notify(
-        TypeNotification.SUCESS,
-        "Exelent!",
-        "Project available for use"
-      );
-      this.$router.push("/projects");
-    },
-  },
-  setup() {
+  setup(props) {
+    const router = useRouter();
+
     const store = useStore();
     const { notify } = useNotifier();
+    const projectName = ref("");
+
+    if (props.id) {
+      const project = store.state.project.projects.find(
+        (project) => project.id == props.id
+      );
+      projectName.value = project?.name || "";
+    }
+
+    const save = () => {
+      if (props.id) {
+        store
+          .dispatch(PUT_PROJECT, {
+            id: props.id,
+            name: projectName.value,
+          })
+          .then(() => {
+            sucessNotification();
+          });
+      } else {
+        store.dispatch(POST_PROJECT, projectName.value).then(() => {
+          sucessNotification();
+        });
+      }
+    };
+
+    const sucessNotification = () => {
+      projectName.value = "";
+      notify(TypeNotification.SUCESS, "Exelent!", "Project available for use");
+      router.push("/projects");
+    };
+
     return {
-      store,
-      notify,
+      projectName,
+      save,
     };
   },
 });

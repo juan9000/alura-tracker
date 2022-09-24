@@ -41,7 +41,7 @@
           </section>
 
           <footer class="modal-card-foot">
-            <button class="button is-success">Save Task</button>
+            <button class="button is-success" @click="editTask">Save Task</button>
             <button class="button" @click="closeModal">Cancel</button>
           </footer>
         </div>
@@ -57,7 +57,7 @@ import TaskForm from "../components/TaskForm.vue";
 import TaskCard from "../components/TaskCard.vue";
 import TaskBox from "../components/TaskBox.vue";
 import { useStore } from "@/store";
-import { GET_PROJECTS, GET_TASKS, POST_TASK } from "@/store/type-actions";
+import { GET_PROJECTS, GET_TASKS, POST_TASK, PUT_TASK } from "@/store/type-actions";
 import ITask from "@/interfaces/ITask";
 
 export default defineComponent({
@@ -84,6 +84,9 @@ export default defineComponent({
   methods: {
     saveTask(task: ITask): void {
       this.store.dispatch(POST_TASK, task);
+    },
+    editTask() {
+      this.store.dispatch(PUT_TASK,  this.selectedTask).then(() => this.closeModal())
     },
     selectTask(task: ITask) {
       this.selectedTask = task;
