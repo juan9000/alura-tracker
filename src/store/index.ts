@@ -46,8 +46,14 @@ export const store = createStore<State>({
     },
   },
   actions: {
-    [GET_TASKS]({ commit }) {
-      http.get("tasks").then((res) => commit(ADD_TASKS, res.data));
+    [GET_TASKS]({ commit }, filter: string) {
+      let url = 'tasks'
+
+      if (filter) {
+        url += '?description=' + filter
+      }
+
+      http.get(url).then((res) => commit(ADD_TASKS, res.data));
     },
     [POST_TASK]({ commit }, task: ITask) {
       return http.post("/tasks", task).then((res) => {

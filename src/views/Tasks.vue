@@ -4,6 +4,20 @@
     <div class="list">
       <TaskBox v-if="noTask"> Any task to display ;-; </TaskBox>
 
+      <div class="field">
+        <p class="control has-icons-left">
+          <input
+            class="input"
+            type="text"
+            placeholder="Search Tasks"
+            v-model="filter"
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-search"></i>
+          </span>
+        </p>
+      </div>
+
       <TaskCard
         v-for="(task, index) in tasks"
         :key="index"
@@ -41,7 +55,9 @@
           </section>
 
           <footer class="modal-card-foot">
-            <button class="button is-success" @click="editTask">Save Task</button>
+            <button class="button is-success" @click="editTask">
+              Save Task
+            </button>
             <button class="button" @click="closeModal">Cancel</button>
           </footer>
         </div>
@@ -51,13 +67,18 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref, watchEffect } from "vue";
 
 import TaskForm from "../components/TaskForm.vue";
 import TaskCard from "../components/TaskCard.vue";
 import TaskBox from "../components/TaskBox.vue";
 import { useStore } from "@/store";
-import { GET_PROJECTS, GET_TASKS, POST_TASK, PUT_TASK } from "@/store/type-actions";
+import {
+  GET_PROJECTS,
+  GET_TASKS,
+  POST_TASK,
+  PUT_TASK,
+} from "@/store/type-actions";
 import ITask from "@/interfaces/ITask";
 
 export default defineComponent({
@@ -86,7 +107,9 @@ export default defineComponent({
       this.store.dispatch(POST_TASK, task);
     },
     editTask() {
-      this.store.dispatch(PUT_TASK,  this.selectedTask).then(() => this.closeModal())
+      this.store
+        .dispatch(PUT_TASK, this.selectedTask)
+        .then(() => this.closeModal());
     },
     selectTask(task: ITask) {
       this.selectedTask = task;
@@ -100,9 +123,23 @@ export default defineComponent({
     const store = useStore();
     store.dispatch(GET_TASKS);
     store.dispatch(GET_PROJECTS);
+
+    const filter = ref("");
+    // const tasks = computed(() =>
+    //   store.state.tasks.filter(
+    //     (task) => !filter.value || task.description.toLocaleLowerCase().includes(filter.value.toLocaleLowerCase())
+    //   )
+    // );
+
+    watchEffect(() => {
+      store.dispatch(GET_TASKS, filter.value)
+      console.log(filter.value)
+    })
+
     return {
       tasks: computed(() => store.state.tasks),
       store,
+      filter,
     };
   },
 });
